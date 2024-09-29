@@ -34,35 +34,17 @@ class DataQuality:
         categorical_columns = self.df.select_dtypes(include=['object']).columns
         return {col: self.df[col].value_counts() for col in categorical_columns}
 
-def plot_distributions(self, max_categories=10):
-    """Gera gráficos de distribuição para colunas categóricas e numéricas com limitação no eixo X."""
-    
-    # Colunas categóricas
-    categorical_columns = self.df.select_dtypes(include=['object']).columns
-    
-    for col in categorical_columns:
-        unique_values = self.df[col].nunique()
-
-        if unique_values > max_categories:
-            # Se há mais categorias do que o limite, cria gráficos em partes
-            parts = (unique_values // max_categories) + 1
-            for part in range(parts):
-                plt.figure(figsize=(10, 6))
-                sns.countplot(data=self.df, x=col, 
-                              order=self.df[col].value_counts().index[part * max_categories:(part + 1) * max_categories])
-                plt.title(f'Distribuição da coluna categórica: {col} (Parte {part + 1})')
-                plt.xticks(rotation=45)
-                plt.tight_layout()
-                plt.show()
-        else:
-            # Se o número de categorias é menor ou igual ao limite, exibe normalmente
-            plt.figure(figsize=(10, 6))
-            sns.countplot(data=self.df, x=col, order=self.df[col].value_counts().index)
+    def plot_distributions(self):
+        """Gera gráficos de distribuição para colunas categóricas e numéricas."""
+        # Colunas categóricas
+        categorical_columns = self.df.select_dtypes(include=['object']).columns
+        for col in categorical_columns:
+            plt.figure(figsize=(8, 6))
+            sns.countplot(data=self.df, x=col)
             plt.title(f'Distribuição da coluna categórica: {col}')
             plt.xticks(rotation=45)
             plt.tight_layout()
             plt.show()
-
 
         # Colunas numéricas
         numeric_columns = self.df.select_dtypes(include=['number']).columns
