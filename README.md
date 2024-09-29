@@ -10,3 +10,10 @@ O módulo possui métodos gerais para a análise de qualquer dataset, incluindo:
     - Descrição estatística das colunas numéricas (.describe)
     - Gráficos de distribuição para colunas categóricas
     - Gráficos de distribuição para colunas numéricas
+
+### Como Usar
+
+    1. Clone o repositório.
+    2. Coloque o dataset desejado na pasta `dataset/`.
+    3. No arquivo `analysis.ipynb`, defina o nome do arquivo com o caminho correto do dataset.
+    4. Execute o Jupyter Notebook para gerar o relatório de análise.
