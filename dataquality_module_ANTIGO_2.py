@@ -3,9 +3,8 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 
 class DataQuality:
-    def __init__(self, filepath, date_column=None):
+    def __init__(self, filepath):
         self.filepath = filepath
-        self.date_column = date_column
         self.df = self.load_data()
 
     def load_data(self):
@@ -18,28 +17,6 @@ class DataQuality:
             print(f"Erro: Arquivo não encontrado no caminho {self.filepath}")
             return None
 
-    def filter_last_10_years(self):
-        """Filtra os dados para incluir apenas os últimos 10 anos com base na coluna de data."""
-        if self.date_column is None:
-            print("Erro: A coluna de data não foi especificada.")
-            return
-
-        # Converte a coluna de data para o tipo datetime, considerando o formato dd/mm/yyyy
-        self.df[self.date_column] = pd.to_datetime(self.df[self.date_column], format='%d/%m/%Y', errors='coerce')
-
-        # Remove linhas com datas inválidas
-        self.df = self.df.dropna(subset=[self.date_column])
-
-        # Obtém o ano mais recente no dataset
-        max_date = self.df[self.date_column].max()
-
-        # Calcula a data de 10 anos atrás
-        last_10_years = max_date - pd.DateOffset(years=10)
-
-        # Filtra o dataset para os últimos 10 anos
-        self.df = self.df[self.df[self.date_column] >= last_10_years]
-        print(f"Dados filtrados para os últimos 10 anos a partir de {last_10_years.date()}")
-    
     def null_count(self):
         """Conta os valores nulos por coluna."""
         return self.df.isnull().sum()
@@ -74,7 +51,7 @@ class DataQuality:
                     sns.countplot(data=self.df, x=col, 
                                   order=self.df[col].value_counts().index[part * max_categories:(part + 1) * max_categories])
                     plt.title(f'Distribuição da coluna categórica: {col} (Parte {part + 1})')
-                    plt.xticks(rotation=90)
+                    plt.xticks(rotation=45)
                     plt.tight_layout()
                     plt.show()
             else:
@@ -100,10 +77,7 @@ class DataQuality:
         """Executa todas as análises e gera um relatório básico."""
         print("Iniciando análise de qualidade de dados...\n")
         
-        print("Filtrando dados para os últimos 10 anos...")
-        self.filter_last_10_years()
-
-        print("\nContagem de valores nulos:")
+        print("Contagem de valores nulos:")
         print(self.null_count())
         
         print("\nContagem de valores únicos:")

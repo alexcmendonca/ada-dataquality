@@ -17,3 +17,7 @@ O módulo possui métodos gerais para a análise de qualquer dataset, incluindo:
     2. Coloque o dataset desejado na pasta `dataset/`.
     3. No arquivo `analysis.ipynb`, defina o nome do arquivo com o caminho correto do dataset.
     4. Execute o Jupyter Notebook para gerar o relatório de análise.
+
+### Histórico Commit
+
+![Histórico Commit](img/historico_commit.png)
